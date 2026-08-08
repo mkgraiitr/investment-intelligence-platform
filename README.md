@@ -15,6 +15,8 @@ The first GitHub version intentionally does not implement buy/sell recommendatio
 - Policy Engine framework
 - Insights module with safer attention labels
 - Advisor Chat context and explainability framework
+- Country/market-specific portfolio support through portfolio configuration
+- Configurable external endpoint/provider settings
 - Audit and journal history
 
 ## Deferred Scope
@@ -32,8 +34,20 @@ The first GitHub version intentionally does not implement buy/sell recommendatio
 The working specification history is stored in `docs/`:
 
 - `Investment_Intelligence_Platform_Functional_Spec_v0.3.md`
+- `Investment_Intelligence_Platform_Technical_Architecture_v0.1.md`
+- `Investment_Intelligence_Platform_Database_Model_v0.1.md`
 
-Word versions are also included for easier review. Version `v0.3` is the current working baseline.
+Version `v0.3` is the current functional baseline. Version `Technical Architecture v0.1` is the current implementation baseline. Version `Database Model v0.1` is the current logical data baseline.
+
+## Selected Technical Stack
+
+The first implementation will use:
+
+- Frontend interaction model: HTMX
+- Backend: Spring Boot
+- Java runtime: Java 25
+- Database: PostgreSQL
+- Initial architecture style: modular monolith with clear engine and adapter boundaries
 
 ## Product Design
 
@@ -53,6 +67,12 @@ The current Figma design file is available here:
 | Insights | Converts analysis into non-execution guidance such as Track, Research Further, Criteria Approaching, Risk Review, or Policy Warning. |
 | Intelligence | Centralizes news, sentiment, big announcements, deals, projects, social signals, and market narratives affecting tracked assets. |
 | Policy & Settings | Manages investment policy, benchmark, cash preference, risk thresholds, scoring rules, data providers, profile, and future public-ready settings. |
+
+Terminology baseline:
+
+- **Discover** is the primary navigation item for finding market ideas. **Market Scanner** is a section inside Discover.
+- **Research / Analysis Workspace** is the deeper workspace for studying a specific asset, sector, or theme.
+- **Insights** is the safer v1 replacement for action-oriented recommendation language.
 
 ## Manual Holdings Format
 
@@ -82,6 +102,8 @@ Initial provider candidates:
 - Filings/fundamentals: SEC EDGAR APIs, if needed
 
 API keys should be provided through environment variables and should never be committed.
+
+Provider base URLs and other external endpoints should be configurable through adapter settings rather than hardcoded in application code.
 
 ## Document Generation
 

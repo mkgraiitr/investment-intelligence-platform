@@ -51,6 +51,10 @@ Explicit buy/sell recommendations, suitability logic, broker execution, and publ
 - Themes: manual creation plus auto-suggestions
 - Scoring Engine: separate API-based engine
 - Recommendation Engine: deferred to later phase
+- First implementation stack: HTMX, Spring Boot, Java 25, PostgreSQL
+- Initial architecture style: modular monolith with clear engine and adapter boundaries
+- Country/market-specific portfolios: stored as portfolios linked to an investor profile
+- External provider endpoints: configurable through adapter settings, not hardcoded
 
 ## 4. Non-Goals for First Cut
 
@@ -69,14 +73,16 @@ The first version should not:
 
 The product should include:
 
-1. Daily Briefing
+1. Home / Daily Brief
 2. Portfolio
-3. Market Scanner
+3. Discover
 4. Watchlist & Themes
-5. Analysis Workspace
+5. Research / Analysis Workspace
 6. Insights
 7. Intelligence
 8. Policy & Settings
+
+Discovery-oriented capabilities such as Market Scanner, Hot Themes, Sentiment Movers, and Speculative Radar should live inside Discover rather than appearing as separate primary navigation items.
 
 Advisor Chat should be globally available, but in v1 it should explain context and evidence rather than produce final investment recommendations.
 
@@ -93,6 +99,8 @@ The system should separate:
 - Advisor Chat Memory
 
 For v1, only one user is required. For future public use, each user must have independent profile, policy, portfolio, watchlist, themes, insights, chat memory, and audit history.
+
+Different country or market portfolios should be represented as separate portfolios linked to an investor profile. Investor profile should store personal/tax/risk context, while portfolio should store market scope, benchmark, base currency, and country-specific allocation context.
 
 ## 7. Manual Holdings Input
 
@@ -152,6 +160,9 @@ Provider rules:
 
 - No API keys checked into GitHub
 - Use environment variables for secrets
+- Keep provider base URLs and external endpoints configurable
+- Support local, sandbox and production endpoint environments
+- Store secret references, not raw secret values
 - Store provider name and timestamp
 - Track data freshness
 - Track source confidence
@@ -245,7 +256,7 @@ It should connect intelligence items to:
 - Portfolio holdings
 - Watchlist items
 - Themes
-- Market Scanner results
+- Discover results
 - Insights
 - Advisor Chat explanations
 

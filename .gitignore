@@ -1,0 +1,25 @@
+# macOS
+.DS_Store
+
+# Local environment and secrets
+.env
+.env.*
+!.env.example
+
+# Java / Spring Boot build output
+target/
+build/
+out/
+*.class
+
+# IDE metadata
+.idea/
+.vscode/
+*.iml
+
+# Logs
+*.log
+
+# Generated QA/render artifacts
+qa/
+.docx_qa_policy/
