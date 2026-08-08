@@ -31,8 +31,6 @@ The first GitHub version intentionally does not implement buy/sell recommendatio
 
 The working specification history is stored in `docs/`:
 
-- `Investment_Intelligence_Platform_Functional_Spec_v0.1.md`
-- `Investment_Intelligence_Platform_Functional_Spec_v0.2.md`
 - `Investment_Intelligence_Platform_Functional_Spec_v0.3.md`
 
 Word versions are also included for easier review. Version `v0.3` is the current working baseline.
