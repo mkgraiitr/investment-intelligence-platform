@@ -35,6 +35,25 @@ The working specification history is stored in `docs/`:
 
 Word versions are also included for easier review. Version `v0.3` is the current working baseline.
 
+## Product Design
+
+The current Figma design file is available here:
+
+- [Investment Intelligence Platform design](https://www.figma.com/design/GkDt0X80N7EwQU20GttFUQ)
+
+## Main Pages
+
+| Menu item | Description |
+|---|---|
+| Home / Daily Brief | A configurable landing page that summarizes today’s portfolio status, market signals, alerts, and items needing attention. |
+| Portfolio | Shows holdings, allocation, cash level, concentration, benchmark comparison, and policy-aware portfolio risk. |
+| Discover | Helps find stocks, ETFs, sectors, themes, sentiment movers, announcements, and market ideas worth tracking. |
+| Watchlist & Themes | Stores stocks or themes of interest, including ideas from articles, friends, newsletters, social buzz, or personal research. |
+| Research / Analysis Workspace | Provides a deeper workspace for studying one stock, ETF, sector, or theme using fundamentals, valuation, sentiment, risks, and explainability. |
+| Insights | Converts analysis into non-execution guidance such as Track, Research Further, Criteria Approaching, Risk Review, or Policy Warning. |
+| Intelligence | Centralizes news, sentiment, big announcements, deals, projects, social signals, and market narratives affecting tracked assets. |
+| Policy & Settings | Manages investment policy, benchmark, cash preference, risk thresholds, scoring rules, data providers, profile, and future public-ready settings. |
+
 ## Manual Holdings Format
 
 The initial import format is a JSON array:
