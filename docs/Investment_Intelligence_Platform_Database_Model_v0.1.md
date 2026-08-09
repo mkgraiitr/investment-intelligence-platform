@@ -721,6 +721,7 @@ Initial indexing candidates:
 - External alerts
 - Additional asset classes
 - AI model provider abstraction
+- AI Output Harness storage such as model invocations, validation results, prompt templates, feature flags, and AI memory entries
 - Dedicated scoring service
 
 ## 17. Open Decisions
@@ -733,3 +734,4 @@ These should be decided when implementation begins:
 - Whether to treat holdings as aggregate positions only, lot-level records only, or both.
 - Whether provider raw payloads should be retained forever or expire after a retention period.
 - Whether Advisor Chat memory requires a separate long-term memory table in v1.
+- Whether AI-specific audit and validation records should be separate tables or stored through generalized audit events.

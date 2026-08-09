@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<body>
+<section id="portfolio-context" class="panel" th:fragment="context">
+    <div class="section-heading">
+        <div>
+            <p class="eyebrow">Portfolio context</p>
+            <h3>Profile, market, and benchmark</h3>
+        </div>
+        <span class="status-pill">Personal mode</span>
+    </div>
+    <div class="info-grid">
+        <div>
+            <span>Scope</span>
+            <strong th:text="${view.summary.portfolioScope}">country_specific</strong>
+        </div>
+        <div>
+            <span>Market</span>
+            <strong th:text="${view.summary.primaryMarketCountry}">US</strong>
+        </div>
+        <div>
+            <span>Base currency</span>
+            <strong th:text="${view.summary.baseCurrency}">USD</strong>
+        </div>
+        <div>
+            <span>Benchmark</span>
+            <strong th:text="${view.summary.primaryBenchmark}">Nasdaq-100 Total Return</strong>
+        </div>
+    </div>
+</section>
+
+<section id="portfolio-summary" class="card-grid three" th:fragment="summary">
+    <article class="metric-card">
+        <span>Total market value</span>
+        <strong th:text="'$' + ${#numbers.formatDecimal(view.summary.totalMarketValue, 1, 'COMMA', 2, 'POINT')}">$125,000.00</strong>
+        <p>Seeded value until holdings import is wired to the database.</p>
+    </article>
+    <article class="metric-card">
+        <span>Cash</span>
+        <strong th:text="${#numbers.formatDecimal(view.summary.cashPercentage * 100, 1, 1)} + '%'">15.0%</strong>
+        <p th:text="'$' + ${#numbers.formatDecimal(view.summary.cashValue, 1, 'COMMA', 2, 'POINT')} + ' flexible target'">$18,750.00 flexible target</p>
+    </article>
+    <article class="metric-card">
+        <span>Core / Satellite</span>
+        <strong th:text="${#numbers.formatDecimal(view.summary.corePercentage * 100, 1, 0)} + '% / ' + ${#numbers.formatDecimal(view.summary.satellitePercentage * 100, 1, 0)} + '%'">72% / 13%</strong>
+        <p>Satellite maximum policy placeholder: 20%.</p>
+    </article>
+</section>
+
+<section id="portfolio-charts" class="panel" th:fragment="charts">
+    <div class="section-heading">
+        <div>
+            <p class="eyebrow">Configurable report views</p>
+            <h3>Allocation visualizations</h3>
+        </div>
+        <span class="status-pill muted">User can show, hide, reorder, and change chart type later</span>
+    </div>
+
+    <div class="chart-grid">
+        <article class="chart-card" th:each="chart : ${view.charts}" th:if="${chart.visible}">
+            <div class="chart-card-header">
+                <div>
+                    <strong th:text="${chart.displayName}">Chart</strong>
+                    <span th:text="${chart.chartType}">donut</span>
+                </div>
+                <small th:text="'#' + ${chart.displayOrder}">#1</small>
+            </div>
+            <div class="bar-stack" aria-hidden="true">
+                <span th:each="slice : ${chart.data}"
+                      th:style="|width: ${slice.percentage * 100}%; background: ${slice.color};|"></span>
+            </div>
+            <ul class="legend-list">
+                <li th:each="slice : ${chart.data}">
+                    <span class="legend-color" th:style="|background: ${slice.color};|"></span>
+                    <span th:text="${slice.label}">Core</span>
+                    <strong th:text="${#numbers.formatDecimal(slice.percentage * 100, 1, 1)} + '%'">72.0%</strong>
+                </li>
+            </ul>
+        </article>
+    </div>
+</section>
+
+<section id="portfolio-holdings" class="panel" th:fragment="holdings">
+    <div class="section-heading">
+        <div>
+            <p class="eyebrow">Holdings</p>
+            <h3>Manual and JSON-import-ready list</h3>
+        </div>
+        <span class="status-pill muted">Sample data</span>
+    </div>
+
+    <div class="table-wrap">
+        <table>
+            <thead>
+            <tr>
+                <th>Symbol</th>
+                <th>Name</th>
+                <th>Type</th>
+                <th>Country</th>
+                <th>Bucket</th>
+                <th>Quantity</th>
+                <th>Avg cost</th>
+                <th>Market value</th>
+                <th>Weight</th>
+                <th>Label</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="holding : ${view.holdings}">
+                <td><strong th:text="${holding.symbol}">AAPL</strong></td>
+                <td th:text="${holding.name}">Apple Inc.</td>
+                <td th:text="${holding.assetType}">Stock</td>
+                <td th:text="${holding.country}">US</td>
+                <td>
+                    <span class="bucket-pill" th:text="${holding.bucket}">Core</span>
+                </td>
+                <td th:text="${#numbers.formatDecimal(holding.quantity, 1, 'COMMA', 2, 'POINT')}">10.50</td>
+                <td th:text="'$' + ${#numbers.formatDecimal(holding.averageCost, 1, 'COMMA', 2, 'POINT')}">$175.25</td>
+                <td th:text="'$' + ${#numbers.formatDecimal(holding.marketValue, 1, 'COMMA', 2, 'POINT')}">$21,000.00</td>
+                <td th:text="${#numbers.formatDecimal(holding.portfolioPercentage * 100, 1, 1)} + '%'">16.8%</td>
+                <td>
+                    <span class="label-pill" th:text="${holding.insightLabel}">Track</span>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</section>
+</body>
+</html>

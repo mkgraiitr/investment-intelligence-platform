@@ -32,6 +32,8 @@ It should focus on:
 
 Explicit buy/sell recommendations, suitability logic, broker execution, and public advisory behavior are deferred.
 
+The first deployed version should prioritize deterministic software engineering features. AI-assisted capabilities should be introduced later, after the core application is deployed and stable.
+
 ## 3. Current Decisions
 
 - Product name: Investment Intelligence Platform
@@ -51,10 +53,12 @@ Explicit buy/sell recommendations, suitability logic, broker execution, and publ
 - Themes: manual creation plus auto-suggestions
 - Scoring Engine: separate API-based engine
 - Recommendation Engine: deferred to later phase
-- First implementation stack: HTMX, Spring Boot, Java 25, PostgreSQL
+- First implementation stack: HTMX, Spring Boot 4.1.x, Java 25, Maven, PostgreSQL
 - Initial architecture style: modular monolith with clear engine and adapter boundaries
 - Country/market-specific portfolios: stored as portfolios linked to an investor profile
 - External provider endpoints: configurable through adapter settings, not hardcoded
+- Delivery strategy: deploy traditional software engineering core first, then add AI-assisted features later
+- AI output: must pass through an output harness before being used as approved product output
 
 ## 4. Non-Goals for First Cut
 
@@ -68,6 +72,8 @@ The first version should not:
 - Provide public personalized financial advice
 - Present social sentiment as enough evidence for portfolio action
 - Give positive recommendations for shell-like, unsupported, or insufficient-evidence instruments
+- Require AI model access for the first deployed core version
+- Show AI-generated output as approved product output without validation
 
 ## 5. Primary Navigation
 

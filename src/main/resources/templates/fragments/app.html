@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" th:fragment="shell(content)">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:text="${pageTitle} + ' · Investment Intelligence Platform'">Investment Intelligence Platform</title>
+    <link rel="stylesheet" th:href="@{/css/app.css}">
+    <script src="https://unpkg.com/htmx.org@2.0.4"></script>
+</head>
+<body>
+<div class="app-shell">
+    <aside class="sidebar" aria-label="Primary navigation">
+        <div class="brand-block">
+            <div class="brand-mark">IIP</div>
+            <div>
+                <p class="eyebrow">Personal mode</p>
+                <h1>Investment Intelligence</h1>
+            </div>
+        </div>
+
+        <nav class="nav-list">
+            <a th:each="item : ${navigation}"
+               th:href="${item.path}"
+               th:classappend="${activePath == item.path} ? ' active'"
+               class="nav-item">
+                <span th:text="${item.label}">Home</span>
+                <small th:text="${item.description}">Description</small>
+            </a>
+        </nav>
+    </aside>
+
+    <section class="workspace">
+        <header class="topbar">
+            <div>
+                <p class="eyebrow">Phase 1 · Traditional core</p>
+                <h2 th:text="${pageTitle}">Home</h2>
+                <p th:text="${pageDescription}">Page description</p>
+            </div>
+            <div class="topbar-actions">
+                <span class="status-pill muted">AI disabled</span>
+                <span class="status-pill">Nasdaq-100 TR</span>
+            </div>
+        </header>
+
+        <div th:replace="${content}"></div>
+    </section>
+</div>
+
+<aside class="advisor-dock" aria-label="Advisor Chat placeholder">
+    <div>
+        <p class="eyebrow">Advisor Chat</p>
+        <strong th:text="${advisorChatEnabled} ? 'Ready' : 'Planned module'">Planned module</strong>
+        <p th:if="${!advisorChatEnabled}">The chat surface is visible now, but model calls and memory stay off until the AI module is introduced.</p>
+        <p th:if="${advisorChatEnabled}">Advisor Chat is enabled for this environment.</p>
+    </div>
+    <button type="button" disabled>Ask later</button>
+</aside>
+</body>
+</html>

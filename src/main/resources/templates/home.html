@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" th:replace="~{fragments/app :: shell(~{::main})}">
+<body>
+<main class="page-content">
+    <section class="hero-card">
+        <div>
+            <p class="eyebrow">Daily briefing first · configurable later</p>
+            <h3>Your calm command center for portfolio attention.</h3>
+            <p>
+                Phase 1 starts with the non-AI foundation: profiles, portfolios, policy-aware labels,
+                configurable reports, modular provider settings, and safe placeholder intelligence.
+            </p>
+        </div>
+        <div class="hero-score">
+            <span>Portfolio posture</span>
+            <strong>Track</strong>
+            <small>Sample data · no execution guidance</small>
+        </div>
+    </section>
+
+    <section class="card-grid three">
+        <article class="metric-card">
+            <span>Cash target</span>
+            <strong>15%</strong>
+            <p>Flexible target captured in policy; not treated as an absolute hard minimum.</p>
+        </article>
+        <article class="metric-card">
+            <span>Satellite maximum</span>
+            <strong>20%</strong>
+            <p>Designed for higher-risk ideas such as space, quantum, physical AI, and emerging themes.</p>
+        </article>
+        <article class="metric-card">
+            <span>Urgent risk review</span>
+            <strong>15–25%</strong>
+            <p>Drawdown review band is configurable per profile and portfolio.</p>
+        </article>
+    </section>
+
+    <section class="two-column">
+        <article class="panel">
+            <div class="section-heading">
+                <div>
+                    <p class="eyebrow">Today’s attention</p>
+                    <h3>Seeded Phase 1 signals</h3>
+                </div>
+                <span class="status-pill muted">Sample</span>
+            </div>
+            <ul class="attention-list">
+                <li>
+                    <strong>Policy is multi-user ready</strong>
+                    <span>User/profile/portfolio structure is already separated for future public use.</span>
+                </li>
+                <li>
+                    <strong>Provider adapters are configurable</strong>
+                    <span>Alpha Vantage, Alpaca, Finnhub, ApeWisdom/StockGeist can be enabled later through settings.</span>
+                </li>
+                <li>
+                    <strong>AI boundary is explicit</strong>
+                    <span>Advisor Chat, summaries, sentiment, theme suggestions, and explanations are planned behind a common AI layer.</span>
+                </li>
+            </ul>
+        </article>
+
+        <article class="panel">
+            <div class="section-heading">
+                <div>
+                    <p class="eyebrow">Build posture</p>
+                    <h3>What this version does not do</h3>
+                </div>
+            </div>
+            <p>
+                This first cut intentionally avoids buy/sell execution, target prices, broker trading,
+                and AI-generated recommendations. It gives us the architecture and screens first — the
+                sturdy bones before the clever brain.
+            </p>
+        </article>
+    </section>
+</main>
+</body>
+</html>

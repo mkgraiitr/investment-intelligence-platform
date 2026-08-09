@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" th:replace="~{fragments/app :: shell(~{::main})}">
+<body>
+<main class="page-content">
+    <section class="hero-card compact">
+        <div>
+            <p class="eyebrow">Country-specific portfolio</p>
+            <h3 th:text="${view.summary.portfolioName}">US Portfolio</h3>
+            <p>
+                Personal-mode portfolio view with configurable chart sections, policy-aware buckets,
+                Nasdaq-100 Total Return benchmark context, and manual-import placeholders.
+            </p>
+        </div>
+        <div class="hero-score">
+            <span>Primary market</span>
+            <strong th:text="${view.summary.primaryMarketCountry}">US</strong>
+            <small th:text="${view.summary.primaryBenchmark}">Nasdaq-100 Total Return</small>
+        </div>
+    </section>
+
+    <section class="module-actions">
+        <button type="button" hx-get="/hx/portfolio/summary" hx-target="#portfolio-summary" hx-swap="outerHTML">
+            Refresh summary
+        </button>
+        <button type="button" hx-get="/hx/portfolio/report-visualizations" hx-target="#portfolio-charts" hx-swap="outerHTML">
+            Refresh visualizations
+        </button>
+        <button type="button" disabled>Manual add placeholder</button>
+        <button type="button" disabled>JSON upload placeholder</button>
+    </section>
+
+    <div th:replace="~{fragments/portfolio :: context}"></div>
+    <div th:replace="~{fragments/portfolio :: summary}"></div>
+    <div th:replace="~{fragments/portfolio :: charts}"></div>
+    <div th:replace="~{fragments/portfolio :: holdings}"></div>
+</main>
+</body>
+</html>

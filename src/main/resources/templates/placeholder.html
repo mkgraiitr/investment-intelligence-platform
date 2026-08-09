@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" th:replace="~{fragments/app :: shell(~{::main})}">
+<body>
+<main class="page-content">
+    <section class="hero-card compact">
+        <div>
+            <p class="eyebrow">Module boundary</p>
+            <h3 th:text="${pageTitle}">Page title</h3>
+            <p th:text="${pageDescription}">Page description</p>
+        </div>
+        <div class="hero-score">
+            <span>Status</span>
+            <strong>Planned</strong>
+            <small>Phase 1 shell</small>
+        </div>
+    </section>
+
+    <section class="card-grid three">
+        <article class="metric-card">
+            <span>Primary purpose</span>
+            <strong>Organize</strong>
+            <p>This page is reserved as a clean module, not mixed into unrelated screens.</p>
+        </article>
+        <article class="metric-card">
+            <span>Data mode</span>
+            <strong>Configurable</strong>
+            <p>External providers and future AI calls will be attached through adapters and settings.</p>
+        </article>
+        <article class="metric-card">
+            <span>Safety posture</span>
+            <strong>Explainable</strong>
+            <p>Future outputs should show evidence, confidence, missing data, and policy fit.</p>
+        </article>
+    </section>
+</main>
+</body>
+</html>

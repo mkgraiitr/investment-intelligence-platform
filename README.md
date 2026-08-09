@@ -15,6 +15,7 @@ The first GitHub version intentionally does not implement buy/sell recommendatio
 - Policy Engine framework
 - Insights module with safer attention labels
 - Advisor Chat context and explainability framework
+- Traditional-core-first delivery strategy, with AI-assisted features added later
 - Country/market-specific portfolio support through portfolio configuration
 - Configurable portfolio report visualizations
 - Configurable external endpoint/provider settings
@@ -26,6 +27,7 @@ The first GitHub version intentionally does not implement buy/sell recommendatio
 - Suitability framework
 - Broker import integrations
 - Trade execution
+- AI-generated responses and AI-assisted intelligence features in the first deployed core version
 - User registration, login, and public authentication flows
 - Public advisory behavior
 - External alerts
@@ -39,18 +41,156 @@ The working specification history is stored in `docs/`:
 - `Investment_Intelligence_Platform_Technical_Architecture_v0.1.md`
 - `Investment_Intelligence_Platform_Database_Model_v0.1.md`
 - `Investment_Intelligence_Platform_API_Contract_v0.1.md`
+- `Investment_Intelligence_Platform_AI_Boundary_Output_Harness_v0.1.md`
 
-Version `v0.3` is the current functional baseline. Version `Technical Architecture v0.1` is the current implementation baseline. Version `Database Model v0.1` is the current logical data baseline. Version `API Contract v0.1` is the current backend/API baseline.
+Version `v0.3` is the current functional baseline. Version `Technical Architecture v0.1` is the current implementation baseline. Version `Database Model v0.1` is the current logical data baseline. Version `API Contract v0.1` is the current backend/API baseline. Version `AI Boundary and Output Harness v0.1` is the current AI safety and integration baseline.
 
 ## Selected Technical Stack
 
 The first implementation will use:
 
 - Frontend interaction model: HTMX
-- Backend: Spring Boot
+- Backend: Spring Boot 4.1.x
 - Java runtime: Java 25
+- Build tool: Maven
 - Database: PostgreSQL
 - Initial architecture style: modular monolith with clear engine and adapter boundaries
+
+Spring Boot 4.1.x is the recommended baseline for Java 25. Spring Boot 3.5.x can be treated as a fallback only if a required library is not yet compatible with Spring Boot 4.x.
+
+## How to Run
+
+Phase 1 is a traditional-core build. It starts the app shell, database schema, seeded personal portfolio, policy placeholders, configurable provider settings, and non-AI portfolio views.
+
+### Prerequisites
+
+- Java 25, preferably Eclipse Temurin 25
+- Maven 3.9+
+- Docker Desktop
+- IntelliJ IDEA
+- PostgreSQL client tools, optional but useful for inspection
+
+### IntelliJ Setup
+
+Open this folder in IntelliJ:
+
+```text
+/Users/home/IdeaProjects/investment-intelligence-platform
+```
+
+Let IntelliJ import it as a Maven project.
+
+Then configure Java:
+
+1. Open `File → Project Structure → Project`.
+2. Set `Project SDK` to `Temurin 25`.
+3. Set `Language level` to `25`.
+4. Open `Settings → Build, Execution, Deployment → Build Tools → Maven → Runner`.
+5. Set `JRE` to `Project JDK` or `Temurin 25`.
+
+### Build and Test from IntelliJ
+
+In the Maven panel, run:
+
+```text
+Lifecycle → test
+```
+
+The current Phase 1 build should pass the unit tests.
+
+### Start PostgreSQL
+
+From the IntelliJ Terminal:
+
+```bash
+docker compose up -d postgres
+```
+
+Check that the container is running:
+
+```bash
+docker compose ps
+```
+
+Confirm PostgreSQL is ready:
+
+```bash
+docker compose exec postgres pg_isready -U investment -d investment_intelligence
+```
+
+Expected output:
+
+```text
+/var/run/postgresql:5432 - accepting connections
+```
+
+### Run the Spring Boot App from IntelliJ
+
+Open:
+
+```text
+src/main/java/com/mkgraiitr/investmentintelligence/InvestmentIntelligenceApplication.java
+```
+
+Click the green Run button beside the `main` method.
+
+You should see output similar to:
+
+```text
+Tomcat started on port 8080
+Started InvestmentIntelligenceApplication
+```
+
+### Open in Browser
+
+```text
+http://localhost:8080
+```
+
+Useful pages:
+
+- `http://localhost:8080/app/home`
+- `http://localhost:8080/app/portfolio`
+- `http://localhost:8080/app/discover`
+- `http://localhost:8080/app/watchlist`
+- `http://localhost:8080/app/insights`
+- `http://localhost:8080/app/policy-settings`
+
+### Stop the App
+
+In IntelliJ, stop the Spring Boot run configuration.
+
+Then stop PostgreSQL:
+
+```bash
+docker compose stop postgres
+```
+
+### Terminal Alternative
+
+If you prefer terminal-only execution:
+
+```bash
+cd /Users/home/IdeaProjects/investment-intelligence-platform
+docker compose up -d postgres
+env JAVA_HOME=/Library/Java/JavaVirtualMachines/temurin-25.jdk/Contents/Home mvn test
+env JAVA_HOME=/Library/Java/JavaVirtualMachines/temurin-25.jdk/Contents/Home mvn spring-boot:run
+```
+
+AI features are disabled by default in Phase 1:
+
+```yaml
+ai:
+  enabled: false
+  advisor-chat:
+    enabled: false
+```
+
+## Delivery Strategy
+
+The first deployable version should focus on the traditional software engineering core. AI-assisted features should be added only after the deterministic product foundation is stable and deployed.
+
+Phase 1 should not require AI model access. Phase 2 can add Advisor Chat responses, AI-assisted summaries, sentiment classification, theme suggestions, and explanation drafts through a common AI Platform Layer and the AI Output Harness.
 
 ## Product Design
 

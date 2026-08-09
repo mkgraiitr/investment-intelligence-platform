@@ -1114,7 +1114,7 @@ The response should never echo raw API keys or secrets.
 
 ## 18. JSON API: Advisor Chat
 
-Advisor Chat is context-aware and evidence-bound. In v1 it should explain portfolio, watchlist, policy, scoring, and intelligence context. It should not execute trades or present itself as a regulated financial advisor.
+Advisor Chat is context-aware and evidence-bound. In the traditional core release, it should operate as a placeholder/context panel with AI-generated responses disabled. After AI is added, it should explain portfolio, watchlist, policy, scoring, and intelligence context through the AI Output Harness. It should not execute trades or present itself as a regulated financial advisor.
 
 ### Get chat context summary
 
@@ -1140,6 +1140,8 @@ Response:
 ### Send chat message
 
 `POST /api/v1/advisor-chat/sessions/{sessionId}/messages`
+
+In Phase 1, this endpoint may be disabled or return a deterministic placeholder response.
 
 Request:
 
@@ -1167,6 +1169,18 @@ Response:
     "No trade execution.",
     "No buy/sell label generated."
   ]
+}
+```
+
+Disabled Phase 1 response:
+
+```json
+{
+  "success": false,
+  "error": {
+    "code": "AI_FEATURE_DISABLED",
+    "message": "AI chat responses are not enabled in this deployment."
+  }
 }
 ```
 
@@ -1202,6 +1216,11 @@ These APIs are intentionally deferred:
 - Email verification APIs
 - Password reset APIs
 - Public authentication provider integration APIs
+- AI-generated Advisor Chat response APIs
+- AI-assisted intelligence summarization APIs
+- AI-assisted sentiment classification APIs
+- AI-assisted theme suggestion APIs
+- AI Output Harness validation APIs
 - Broker import connection APIs
 - Trade execution APIs
 - Order ticket APIs

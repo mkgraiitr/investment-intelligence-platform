@@ -11,9 +11,12 @@ Status: Initial technical architecture baseline
 The first implementation will use:
 
 - Frontend interaction model: HTMX
-- Backend: Spring Boot
+- Backend: Spring Boot 4.1.x
 - Language/runtime: Java 25
+- Build tool: Maven
 - Database: PostgreSQL
+
+Spring Boot 4.1.x is the recommended baseline for Java 25. Spring Boot 3.5.x can be treated as a fallback only if a required library is not yet compatible with Spring Boot 4.x.
 
 The application should start as a modular monolith: one deployable backend with clear internal module boundaries. This keeps the first version simple to build and run while preserving the option to extract engines or services later.
 
@@ -26,6 +29,7 @@ The application should start as a modular monolith: one deployable backend with 
 - Keep scoring rules configurable and versioned.
 - Keep policy checks separate from scoring calculations.
 - Keep insights separate from buy/sell recommendations.
+- Build and deploy the traditional core before enabling AI-assisted features.
 - Store enough audit history to explain why a score, insight, or warning appeared.
 - Design for one personal user first, but avoid assumptions that prevent future multi-user use.
 
@@ -54,6 +58,8 @@ External Providers
   +-- Social sentiment: ApeWisdom / StockGeist
   +-- Filings/fundamentals: SEC EDGAR, if needed
 ```
+
+AI providers are intentionally not required for the first deployed core release. AI integrations should be added later through feature flags, configurable endpoints, and the AI Output Harness.
 
 ## 4. Frontend Architecture
 
@@ -109,6 +115,7 @@ src/main/java/.../investmentintelligence
   +-- policy
   +-- insight
   +-- advisorchat
+  +-- ai
   +-- audit
   |
   +-- provider
@@ -134,6 +141,7 @@ Each module should own its domain model, application services, repository interf
 | Policy Engine | Evaluates user-defined rules, cash preference, concentration warnings, benchmark, and eligibility gates. |
 | Insights | Converts analysis into safe attention labels such as Track, Research Further, Risk Review, and Policy Warning. |
 | Advisor Chat | Provides context-aware explanations using portfolio, watchlist, policy, intelligence, and scoring history. |
+| AI Platform Layer | Future common module for AI workflow routing, prompt registry, context building, output harness validation, model/provider adapters, and audit/evaluation. |
 | Audit & Journal | Records imports, score snapshots, policy changes, insight changes, and important user actions. |
 | Provider Adapters | Integrates external APIs while keeping provider-specific logic outside the domain modules. |
 
@@ -258,11 +266,19 @@ The current API contract is defined in:
 
 The first implementation should separate server-rendered page routes, HTMX fragment routes, and JSON API routes. JSON APIs should be used for domain data, engine contracts, provider adapters, imports, and future integration points.
 
-## 12. First MVP Build Order
+## 12. AI Boundary Baseline
+
+The current AI boundary and output validation approach is defined in:
+
+- `Investment_Intelligence_Platform_AI_Boundary_Output_Harness_v0.1.md`
+
+The first deployed version should not depend on AI model calls. AI-assisted features should be added later behind feature flags and routed through a common AI Platform Layer and the AI Output Harness.
+
+## 13. First MVP Build Order
 
 Recommended build sequence:
 
-1. Project scaffold: Spring Boot, Java 25, PostgreSQL, HTMX, templates, base layout
+1. Project scaffold: Spring Boot 4.1.x, Java 25, Maven, PostgreSQL, HTMX, templates, base layout
 2. Seeded user/profile placeholder for personal mode
 3. Manual holdings entry
 4. JSON holdings upload preview and import
@@ -273,26 +289,30 @@ Recommended build sequence:
 9. Scoring Engine contract with mock scoring
 10. Insights page using safe v1 labels
 11. Policy settings baseline
-12. Advisor Chat context placeholder
+12. Advisor Chat context placeholder, with AI disabled
 13. Audit event capture
+14. Deploy traditional core release
+15. Add AI-assisted features later through the AI Output Harness
 
-## 13. Deferred Technical Decisions
+## 14. Deferred Technical Decisions
 
 These decisions should be made later:
 
 - Thymeleaf vs JTE final template engine
 - Tailwind CSS vs Bootstrap final styling framework
+- Exact Spring Boot 4.1.x patch version at scaffold time
 - Authentication provider for public version
 - Registration, login, email verification, and password reset flows
 - Exact Scoring Engine formulas and thresholds
 - Whether Scoring Engine becomes a separate service
 - Whether Advisor Chat uses OpenAI, local models, or multiple providers
+- AI Output Harness implementation details
 - Background job framework
 - Deployment target
 - External alert channels
 - Broker import architecture
 
-## 14. Security and Compliance Guardrails
+## 15. Security and Compliance Guardrails
 
 The first implementation should:
 
@@ -304,8 +324,9 @@ The first implementation should:
 - Store source timestamps and provider names.
 - Never commit secrets.
 - Keep Advisor Chat memory user-controlled.
+- Keep AI features disabled until output validation, grounding, policy override, and audit behavior are implemented.
 
-## 15. Near-Term Deliverables
+## 16. Near-Term Deliverables
 
 Next documents or implementation artifacts:
 
