@@ -35,12 +35,12 @@
         <strong th:text="'$' + ${#numbers.formatDecimal(view.summary.totalMarketValue, 1, 'COMMA', 2, 'POINT')}">$125,000.00</strong>
         <p>Seeded value until holdings import is wired to the database.</p>
     </article>
-    <article class="metric-card">
+    <article class="metric-card soft-green">
         <span>Cash</span>
         <strong th:text="${#numbers.formatDecimal(view.summary.cashPercentage * 100, 1, 1)} + '%'">15.0%</strong>
         <p th:text="'$' + ${#numbers.formatDecimal(view.summary.cashValue, 1, 'COMMA', 2, 'POINT')} + ' flexible target'">$18,750.00 flexible target</p>
     </article>
-    <article class="metric-card">
+    <article class="metric-card soft-blue">
         <span>Core / Satellite</span>
         <strong th:text="${#numbers.formatDecimal(view.summary.corePercentage * 100, 1, 0)} + '% / ' + ${#numbers.formatDecimal(view.summary.satellitePercentage * 100, 1, 0)} + '%'">72% / 13%</strong>
         <p>Satellite maximum policy placeholder: 20%.</p>
