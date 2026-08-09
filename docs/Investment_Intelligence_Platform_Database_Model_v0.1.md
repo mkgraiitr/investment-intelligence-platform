@@ -97,6 +97,7 @@ The first build should start with this practical set:
 - `holding_lots`
 - `holding_import_batches`
 - `holding_import_rows`
+- `portfolio_report_preferences`
 - `watchlist_items`
 - `themes`
 - `theme_assets`
@@ -125,6 +126,8 @@ Some tables can begin with mock/manual data and become provider-driven later.
 ### users
 
 Represents the application user. In v1 this can be a single personal user, but the schema should not assume only one user forever.
+
+The first implementation should seed one local user instead of exposing registration/login. Future public use can add registration, login, email verification, password reset, and external authentication provider flows using this table and the `auth_subject` field.
 
 | Field | Notes |
 |---|---|
@@ -295,6 +298,25 @@ Stores row-level validation results before/after import.
 | `validation_messages` | JSONB list |
 | `created_holding_id` | Holding created/updated after import |
 | `raw_row` | JSONB original row |
+
+### portfolio_report_preferences
+
+Stores user-selectable portfolio report visualization preferences.
+
+| Field | Notes |
+|---|---|
+| `id` | Primary key |
+| `user_id` | Owner |
+| `portfolio_id` | Portfolio |
+| `report_key` | overview, risk, allocation, custom |
+| `visualization_key` | core_satellite_cash, asset_class_allocation, sector_allocation, country_market_exposure, currency_exposure, theme_exposure, account_allocation, holding_concentration |
+| `display_name` | User-facing chart name |
+| `chart_type` | donut, pie, bar, stacked_bar, treemap, table |
+| `is_visible` | Whether chart appears in the report |
+| `display_order` | Sort order |
+| `config` | JSONB settings such as thresholds, colors, percent/value toggle, benchmark comparison |
+| `created_at` | Creation timestamp |
+| `updated_at` | Update timestamp |
 
 ## 8. Watchlist and Themes
 
@@ -651,6 +673,7 @@ Initial indexing candidates:
 - `portfolios(investor_profile_id, status)`
 - `portfolios(primary_market_country, status)`
 - `holdings(portfolio_id, asset_id)`
+- `portfolio_report_preferences(user_id, portfolio_id, report_key, display_order)`
 - `holding_lots(holding_id, purchase_date)`
 - `watchlist_items(user_id, status)`
 - `themes(user_id, status)`

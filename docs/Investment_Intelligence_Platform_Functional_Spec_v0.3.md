@@ -102,6 +102,8 @@ For v1, only one user is required. For future public use, each user must have in
 
 Different country or market portfolios should be represented as separate portfolios linked to an investor profile. Investor profile should store personal/tax/risk context, while portfolio should store market scope, benchmark, base currency, and country-specific allocation context.
 
+User registration, login, email verification, password reset, and public authentication flows are deferred from v1. The first implementation should run in personal/local mode with one seeded user, while keeping the schema and module boundaries ready for future multi-user public use.
+
 ## 7. Manual Holdings Input
 
 The Portfolio module should support:
@@ -114,6 +116,22 @@ The Portfolio module should support:
 - Assign holdings to accounts
 - Assign Core/Satellite classification
 - Store import history
+- Configurable portfolio report visualizations
+
+Portfolio report visualizations should allow the user to choose which charts appear, the order in which they appear, and the preferred chart type where multiple chart types are available.
+
+Initial visualization candidates:
+
+- Core / Satellite / Cash
+- Asset class allocation
+- Sector allocation
+- Country or market exposure
+- Currency exposure
+- Theme exposure
+- Account or broker allocation
+- Individual holding concentration
+
+Supported chart types may include donut, pie, bar, stacked bar, treemap, and table. The backend should provide normalized chart data while the UI renders the selected visualization.
 
 Required JSON format:
 
@@ -329,6 +347,7 @@ Later versions may add:
 - Suitability framework
 - More exact scoring formulas
 - Broker import integrations
+- User registration and authentication flows
 - External alerts
 - Public onboarding
 - Subscription plans

@@ -75,6 +75,7 @@ Recommended first choice:
 HTMX should be used for:
 
 - Portfolio table refresh
+- Portfolio report chart refresh
 - Holdings add/edit/delete forms
 - JSON upload preview and validation
 - Watchlist item creation
@@ -124,7 +125,7 @@ Each module should own its domain model, application services, repository interf
 | Module | Responsibility |
 |---|---|
 | User & Profile | Stores user identity, preferences, profile, and future multi-user readiness. |
-| Portfolio | Manages holdings, cash, account grouping, allocation, concentration, and benchmark comparison. |
+| Portfolio | Manages holdings, cash, account grouping, allocation, concentration, benchmark comparison, and configurable report visualizations. |
 | Asset | Stores normalized asset metadata for stocks, ETFs, and future asset types. |
 | Watchlist | Tracks ideas from articles, friends, newsletters, social buzz, and personal research. |
 | Theme | Tracks sectors, technologies, narratives, and custom investment themes. |
@@ -135,6 +136,8 @@ Each module should own its domain model, application services, repository interf
 | Advisor Chat | Provides context-aware explanations using portfolio, watchlist, policy, intelligence, and scoring history. |
 | Audit & Journal | Records imports, score snapshots, policy changes, insight changes, and important user actions. |
 | Provider Adapters | Integrates external APIs while keeping provider-specific logic outside the domain modules. |
+
+For v1, User & Profile should run in personal/local mode with one seeded user. Registration, login, email verification, password reset, and public authentication provider integration are deferred, but the module should keep user ownership explicit so those features can be added later.
 
 ## 7. Scoring Engine Boundary
 
@@ -247,12 +250,20 @@ API keys and other secrets must come from environment variables, a local configu
 | Intelligence | Intelligence, Provider Adapters, Sentiment |
 | Policy & Settings | User, Profile, Policy, Provider Configuration, Audit |
 
-## 11. First MVP Build Order
+## 11. API Contract Baseline
+
+The current API contract is defined in:
+
+- `Investment_Intelligence_Platform_API_Contract_v0.1.md`
+
+The first implementation should separate server-rendered page routes, HTMX fragment routes, and JSON API routes. JSON APIs should be used for domain data, engine contracts, provider adapters, imports, and future integration points.
+
+## 12. First MVP Build Order
 
 Recommended build sequence:
 
 1. Project scaffold: Spring Boot, Java 25, PostgreSQL, HTMX, templates, base layout
-2. User/profile placeholder for personal mode
+2. Seeded user/profile placeholder for personal mode
 3. Manual holdings entry
 4. JSON holdings upload preview and import
 5. Portfolio holdings and allocation view
@@ -265,13 +276,14 @@ Recommended build sequence:
 12. Advisor Chat context placeholder
 13. Audit event capture
 
-## 12. Deferred Technical Decisions
+## 13. Deferred Technical Decisions
 
 These decisions should be made later:
 
 - Thymeleaf vs JTE final template engine
 - Tailwind CSS vs Bootstrap final styling framework
 - Authentication provider for public version
+- Registration, login, email verification, and password reset flows
 - Exact Scoring Engine formulas and thresholds
 - Whether Scoring Engine becomes a separate service
 - Whether Advisor Chat uses OpenAI, local models, or multiple providers
@@ -280,7 +292,7 @@ These decisions should be made later:
 - External alert channels
 - Broker import architecture
 
-## 13. Security and Compliance Guardrails
+## 14. Security and Compliance Guardrails
 
 The first implementation should:
 
@@ -293,11 +305,10 @@ The first implementation should:
 - Never commit secrets.
 - Keep Advisor Chat memory user-controlled.
 
-## 14. Near-Term Deliverables
+## 15. Near-Term Deliverables
 
 Next documents or implementation artifacts:
 
-- API contract v0.1
 - Spring Boot project scaffold
 - HTMX page shell
 - Mock provider interfaces

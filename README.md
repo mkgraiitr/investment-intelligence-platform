@@ -16,6 +16,7 @@ The first GitHub version intentionally does not implement buy/sell recommendatio
 - Insights module with safer attention labels
 - Advisor Chat context and explainability framework
 - Country/market-specific portfolio support through portfolio configuration
+- Configurable portfolio report visualizations
 - Configurable external endpoint/provider settings
 - Audit and journal history
 
@@ -25,6 +26,7 @@ The first GitHub version intentionally does not implement buy/sell recommendatio
 - Suitability framework
 - Broker import integrations
 - Trade execution
+- User registration, login, and public authentication flows
 - Public advisory behavior
 - External alerts
 - Additional asset classes
@@ -36,8 +38,9 @@ The working specification history is stored in `docs/`:
 - `Investment_Intelligence_Platform_Functional_Spec_v0.3.md`
 - `Investment_Intelligence_Platform_Technical_Architecture_v0.1.md`
 - `Investment_Intelligence_Platform_Database_Model_v0.1.md`
+- `Investment_Intelligence_Platform_API_Contract_v0.1.md`
 
-Version `v0.3` is the current functional baseline. Version `Technical Architecture v0.1` is the current implementation baseline. Version `Database Model v0.1` is the current logical data baseline.
+Version `v0.3` is the current functional baseline. Version `Technical Architecture v0.1` is the current implementation baseline. Version `Database Model v0.1` is the current logical data baseline. Version `API Contract v0.1` is the current backend/API baseline.
 
 ## Selected Technical Stack
 
@@ -73,6 +76,14 @@ Terminology baseline:
 - **Discover** is the primary navigation item for finding market ideas. **Market Scanner** is a section inside Discover.
 - **Research / Analysis Workspace** is the deeper workspace for studying a specific asset, sector, or theme.
 - **Insights** is the safer v1 replacement for action-oriented recommendation language.
+
+## Authentication Direction
+
+The first build will run in personal/local mode with one seeded user. User registration, login, email verification, password reset, and public authentication flows are deferred, but the schema and module boundaries are multi-user-ready.
+
+## Portfolio Report Visualizations
+
+Portfolio reports should support configurable visualizations. Users should be able to show, hide, reorder, and choose chart types for portfolio views such as Core/Satellite/Cash, sector allocation, country/market exposure, currency exposure, theme exposure, account allocation, and holding concentration.
 
 ## Manual Holdings Format
 
